@@ -1,0 +1,10 @@
+{
+  "name": "Scrollagotchi",
+  "description": "Tamagotchi for your scrolling habits",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "tbd.html",
+    "default_icon": "tbd.png"
+  }
+}
