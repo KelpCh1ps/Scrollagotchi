@@ -93,6 +93,8 @@ chrome.tabs.onActivated.addListener(() =>
                 let igs = ((curTime - data.lastInstagramCheck) / 1000) + data.instagramSeconds;
                 if(data.isOnInstagram === true)
                 {
+                    chrome.alarms.create('moodDropTimer', { periodInMinutes: 0.5 }); // 60 seconds
+                    chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
                      chrome.storage.local.set({ instagramSeconds: igs });
                      chrome.storage.local.set({ isOnInstagram: false });
                      if(igs >= data.thresholdSeconds)
@@ -123,8 +125,8 @@ chrome.tabs.onActivated.addListener(() =>
                  console.log("Seconds until mood drop: " + secToMin);
                // chrome.alarms.create('moodDropTimer', { periodInMinutes: secToMin }); // 60 seconds
             });
-            chrome.alarms.create('moodDropTimer', { periodInMinutes: 0.5 }); // 60 seconds
-            chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
+           // chrome.alarms.create('moodDropTimer', { periodInMinutes: 0.5 }); // 60 seconds
+            // chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
         }
     });
 });
@@ -166,6 +168,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
                 let igs = ((curTime - data.lastInstagramCheck) / 1000) + data.instagramSeconds;
                 if(data.isOnInstagram === true)
                 {
+                    chrome.alarms.create('moodDropTimer', { periodInMinutes: 0.5 }); // 60 seconds
+                    chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
                      chrome.storage.local.set({ instagramSeconds: igs });
                      chrome.storage.local.set({ isOnInstagram: false });
                      if(igs >= data.thresholdSeconds)
@@ -195,8 +199,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
                 
                 //chrome.alarms.create('moodDropTimer', { periodInMinutes: secToMin }); // 60 seconds
             });
-            chrome.alarms.create('moodDropTimer', { periodInMinutes: 0.5 }); // 60 seconds
-            chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
+          //  chrome.alarms.create('moodDropTimer', { periodInMinutes: 0.5 }); // 60 seconds
+          //  chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
         }
     });
 });

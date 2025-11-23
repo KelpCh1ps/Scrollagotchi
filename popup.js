@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function()
         }
         else if (localState.currentMood === Mood.SAD) {
             dogSprite.classList.add('sad');
-            localState.currentHealth -= 0.1;
+            localState.currentHealth -= 0.01;
             if (localState.currentHealth <= 0) {
                 localState.currentHealth = 0;
                 localState.isDead = true; // <- update local state immediately
