@@ -108,10 +108,25 @@ body {
     background-size: contain;
     background-position: center bottom;
 }
+
+.dog-sprite.dead {
+    background-image: url('Assets/Tombstone.png');
+    animation: none;
+    background-size: contain;
+    background-position: center bottom;
+}
   
 @keyframes walk-animation {
     from { background-position: 0px; }
     to { background-position: -1024px; }
+}
+
+.mood-status {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffd700;
+    margin-top: -10px;
+    text-transform: uppercase;
 }
   
 .controls p {

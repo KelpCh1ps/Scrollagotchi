@@ -54,8 +54,11 @@ document.addEventListener('DOMContentLoaded', function()
     function render () {
 
         if(localState.isDead)
-        {
-            // Bricked
+        {   
+            dogSprite.classList.remove('neutral', 'sad');
+            dogSprite.classList.add('dead');
+            healthFill.style.width = '0';
+            return;
         }
 
         const now = Date.now();
@@ -79,16 +82,14 @@ document.addEventListener('DOMContentLoaded', function()
         {
             dogSprite.classList.add('neutral');
         }
-        else if(localState.currentMood === Mood.SAD)
-        {
+        else if (localState.currentMood === Mood.SAD) {
             dogSprite.classList.add('sad');
             localState.currentHealth -= 0.1;
-             if (localState.currentHealth <= 0) 
-             {
+            if (localState.currentHealth <= 0) {
                 localState.currentHealth = 0;
-                chrome.storage.local.set({ isDead: true });
-             }
-            
+                localState.isDead = true; // <- update local state immediately
+                chrome.storage.local.set({ isDead: true, currentHealth: 0 });
+            }
         }
         else
         {
