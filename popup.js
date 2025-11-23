@@ -1,29 +1,52 @@
 document.addEventListener('DOMContentLoaded', function() {
-  
-    const dogElement = document.getElementById('dog');
-    const statusElement = document.getElementById('statusMessage');
-  
-    // happiness score (temp)
-    let happiness = 0;
-  
-    // gain happiness from clicking dog
-    dogElement.addEventListener('click', function() {
-      happiness++;
       
-      statusElement.textContent = "Bark! Happy: " + happiness;
-      statusElement.style.color = "#FFD700"; // Gold color
-  
-      // Make the dog run fast
-      dogElement.style.animationDuration = "0.2s";
-  
-      // Reset back to normal after 1 second
-      setTimeout(() => {
-        statusElement.textContent = "Status: Idle";
-        statusElement.style.color = "#4CAF50"; // Back to Green
-        dogElement.style.animationDuration = "0.8s"; // normal speed
-      }, 1000);
+    const healthFill = document.getElementById('healthFill');
+    const dogSprite = document.getElementById('dog');
+    
+    const Mood = {
+        HAPPY: 0,
+        NEUTRAL: 1,
+        SAD: 2
+    }
+
+    //updates the health bar width by getting the percentage when dividing current mins by max mins
+    function updateHealthBar(currentSeconds, threshold, mood) {
+        let percentage = (currentSeconds/ threshold, mood) * 100;
+
+        //Clamp values
+        if (percentage > 100) percentage = 100;
+        if (percentage < 0) percentage = 0;
+
+        healthFill.style.width = percentage + '%';
+
+        dogSprite.classList.remove('neutral', 'sad');
+
+        if (mood === Mood.HAPPY) {
+            
+        }
+
+        else if (mood === Mood.NEUTRAL) {
+            dogSprite.classList.add('neutral');
+        }
+
+        else if (mood >= Mood.SAD) {
+            dogSprite.classList.add('sad');
+        }
+    }
+
+    chrome.storage.local.get(['instagramSeconds', 'thresholdSeconds', 'currentMood'], (result) => {
+        const secs = result.instagramMinutes || 0;
+        const thresh = result.thresholdSeconds || 60;
+        const mood = result.currentMood !== undefinded ? result.currentMood : Mood.HAPPY;
+        updateUI(secs, thresh, mood);
     });
-  
-    // --- DEBUGGING ---
-    console.log("Scrollagotchi Popup Loaded successfully.");
-  });
+
+    chrome.storage.onChanged.addListener((changes, namespace) => {
+        chrome.storage.local.get (['instagramSeconds', 'thresholdSeconds', 'currentMood'], (result) => {
+            const secs = result.instagramMinutes || 0;
+            const thresh = result.thresholdSeconds || 60;
+            const mood = result.currentMood !== undefinded ? result.currentMood : Mood.HAPPY;
+            updateUI(secs, thresh, mood);
+        });
+    });
+});

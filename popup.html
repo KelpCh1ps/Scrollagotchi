@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset = "UTF-8">
+        <meta charset ="UTF-8">
         <title> Scrollagotchi </title>
-        <link rel = "stylesheet" type = "text/css" href = "popup.css">
+        <link rel ="stylesheet" type ="text/css" href ="popup.css">
     </head>
     <body>
 
-        <div class = "container">
-            <!-- Status message, calls popup.js -->
-            <div class = "status-text" id= "statusMessage" >Status: Idle</div>
+        <div class ="container">
+            <!-- Health Bar -->
+             <div class ="health-label">Health </div>
+             <div class ="health-bar-container">
+                <div class ="health-bar-fill" id="healthFill"> </div>
+             </div>
+
             <!-- Dog animation, calls popup.css -->
-            <div class = "dog-sprite" id= "dog"> </div>
+            <div class ="dog-sprite" id="dog"> </div>
 
             <!-- Instructions -->
-            <div class = "controls">
+            <div class ="controls">
                 <p> Scroll to feed </p>
             </div>
         </div>
 
         <!-- loads popup.js -->
-        <script src = "popup.js"> </script>
+        <script src ="popup.js"> </script>
     </body>
 </html>
