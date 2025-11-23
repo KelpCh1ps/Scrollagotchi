@@ -1,4 +1,4 @@
-body {
+HTML, body {
     width: 250px; /* sets popup window to specific width and height */
     height: 300px;
     background-color: #222;
@@ -94,10 +94,10 @@ body {
     background-position: center;
   }
   
-  /* Neutrel State (20% - 50% Health */
+  /* Neutral State (20% - 50% Health */
 
 .dog-sprite.neutral {
-    background-image: url('Assets/dog_neutral.png');
+    background-image: url('Assets/Scrollagotchi_Neutral.png');
 
     animation: none;
 
@@ -106,7 +106,7 @@ body {
 }
 
 .dog-sprite.sad {
-    background-image: url('Assets/dog_sad.png');
+    background-image: url('Assets/Scrollagotchi_Sad.png');
 
     animation: none;
 
