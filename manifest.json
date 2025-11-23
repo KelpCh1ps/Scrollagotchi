@@ -9,7 +9,7 @@
   "version": "1.0",
   "manifest_version": 3,
   "action": {
-    "default_popup": "tbd.html",
-    "default_icon": "tbd.png"
+    "default_popup": "Scrollagotchi_Isolated.png",
+    "default_icon": "Scrollagotchi_Logo.png"
   }
 }
