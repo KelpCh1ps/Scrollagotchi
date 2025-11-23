@@ -47,9 +47,8 @@ It's a whimsical blend of nostalgia and modern digital wellness—your personal 
 	```bash
 	# ✨ Scrollagotchi ✨
 
-	<p align="center">
-	  <img src="Assets/Scrollagotchi_Logo.png" alt="Scrollagotchi Logo" width="240" />
-	</p>
+	<img width="2048" height="2048" alt="Scrollagotchi_Logo" src="https://github.com/user-attachments/assets/d5230745-9a36-4bfb-a774-ccdb6e10ee1c" />
+
 
 	> *A delightfully adorable digital companion that judges your Instagram habits—with style*
 
