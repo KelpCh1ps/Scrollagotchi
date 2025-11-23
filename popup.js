@@ -38,12 +38,12 @@ document.addEventListener('DOMContentLoaded', function() {
         healthFill.style.width = percentage + '%';
 
         dogSprite.classList.remove('neutral', 'sad');
-        const mood = localState.currentMood;
-
-        if (mood === Mood.NEUTRAL) {
-            dogSprite.classList.add('neutral');
-        } else if (mood === Mood.SAD) {
+        
+        if (percentage <= 20) {
             dogSprite.classList.add('sad');
+        }
+        else if (percentage <= 50) {
+            dogSprite.classList.add('neutral');
         }
     }
 

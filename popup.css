@@ -96,14 +96,14 @@ body {
 }
 
 .dog-sprite.neutral {
-    background-image: url('Assets/dog_neutral.png');
+    background-image: url('Assets/Scrollagotchi_Neutral.png');
     animation: none; 
     background-size: contain;
     background-position: center bottom;
 }
 
 .dog-sprite.sad {
-    background-image: url('Assets/dog_sad.png');
+    background-image: url('Assets/Scrollagotchi_Sad.png');
     animation: none; 
     background-size: contain;
     background-position: center bottom;
