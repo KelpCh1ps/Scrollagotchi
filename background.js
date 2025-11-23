@@ -35,7 +35,7 @@ let isDead = false;
 //////////////////////////////////////////////
 */
 
-chrome.storage.local.get(['currentHealth'], (data) => 
+chrome.storage.local.get({currentHealth : 100}, (data) => 
 {
     const currentHealth = data.currentHealth;
     if(currentHealth <= 0)
