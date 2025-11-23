@@ -16,7 +16,8 @@ chrome.runtime.onInstalled.addListener(() =>
         currentMood: Mood.HAPPY,
         currentHealth: 100,
         isDead: false,
-        isOnInstagram: false
+        isOnInstagram: false,
+        timeSinceLastStatus: Date.now()
 
     });
 });
@@ -77,16 +78,28 @@ chrome.tabs.onActivated.addListener(() =>
         }
         else
         {
-            chrome.storage.local.get({lastInstagramCheck: Date.now(), instagramSeconds : 0, isOnInstagram : false}, (data) => 
+            chrome.storage.local.get({thresholdSeconds : 60, lastInstagramCheck: Date.now(), instagramSeconds : 0, isOnInstagram : false, currentMood : Mood.NEUTRAL}, (data) => 
             {
                 const curTime = Date.now();
-                const igs = ((curTime - data.lastInstagramCheck) / 1000) + data.instagramSeconds;
+                let igs = ((curTime - data.lastInstagramCheck) / 1000) + data.instagramSeconds;
                 if(data.isOnInstagram === true)
                 {
                      chrome.storage.local.set({ instagramSeconds: igs });
                      chrome.storage.local.set({ isOnInstagram: false });
+                     if(igs >= data.thresholdSeconds)
+                     {
+                        igs -= data.thresholdSeconds;
+                        chrome.storage.local.set({ instagramSeconds: igs });
+                        const currMood = data.currentMood;
+                        if(currMood > Mood.HAPPY)
+                        {
+                            chrome.storage.local.set({ currentMood: currMood - 1});
+                            chrome.storage.local.set({ timeSinceLastStatus: Date.now() });
+                        }
+                     }
                 }
                  chrome.storage.local.set({  lastInstagramCheck: curTime });
+                 
             });
             // Stop instagram timer and start mood drop timer
             chrome.alarms.create('moodDropTimer', { periodInMinutes: 1 }); // 60 seconds
@@ -118,16 +131,28 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
         }
         else
         {
-            chrome.storage.local.get({lastInstagramCheck: Date.now(), instagramSeconds : 0,  isOnInstagram : false}, (data) => 
+            chrome.storage.local.get({thresholdSeconds : 60, lastInstagramCheck: Date.now(), instagramSeconds : 0, isOnInstagram : false, currentMood : Mood.NEUTRAL}, (data) => 
             {
                 const curTime = Date.now();
-                const igs = ((curTime - data.lastInstagramCheck) / 1000) + data.instagramSeconds;
+                let igs = ((curTime - data.lastInstagramCheck) / 1000) + data.instagramSeconds;
                 if(data.isOnInstagram === true)
                 {
                      chrome.storage.local.set({ instagramSeconds: igs });
                      chrome.storage.local.set({ isOnInstagram: false });
+                     if(igs >= data.thresholdSeconds)
+                     {
+                        igs -= data.thresholdSeconds;
+                        chrome.storage.local.set({ instagramSeconds: igs });
+                        const currMood = data.currentMood
+                        if(currMood > Mood.HAPPY)
+                        {
+                            chrome.storage.local.set({ currentMood: currMood - 1});
+                            chrome.storage.local.set({ timeSinceLastStatus: Date.now() });
+                        }
+                     }
                 }
-                chrome.storage.local.set({  lastInstagramCheck: curTime });
+                 chrome.storage.local.set({  lastInstagramCheck: curTime });
+                 
             });
             // Stop instagram timer and start mood drop timer
             chrome.alarms.create('moodDropTimer', { periodInMinutes: 1 }); // 60 seconds
@@ -142,17 +167,22 @@ chrome.alarms.onAlarm.addListener((alarm) =>
     {
         chrome.storage.local.get(['currentMood'], (data) => 
         {
-             const currentMood = data.currentMood;
+             let currentMood = data.currentMood;
             if (currentMood < Mood.SAD)
             {
-                chrome.storage.local.set({ currentMood: currentMood + 1 });
+                currentMood++;
+                chrome.storage.local.set({ currentMood: currentMood});
+            }
+            if(currentMood === Mood.SAD)
+            {
+                chrome.storage.local.set({ timeSinceLastStatus: Date.now() });
             }
         });
     }
     else if (alarm.name === 'resetInstagramTimer')
     {
         chrome.storage.local.set({ instagramSeconds: 0 });
-        //instagramSeconds = 0;
+        
     }
 });
 
