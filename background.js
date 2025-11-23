@@ -37,8 +37,8 @@ let isDead = false;
 
 chrome.storage.local.get({currentHealth : 100}, (data) => 
 {
-    const currentHealth = data.currentHealth;
-    if(currentHealth <= 0)
+    
+    if(data.currentHealth <= 0)
     {
         chrome.storage.local.set({ isDead: true });
         // Deletes itself
