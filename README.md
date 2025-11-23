@@ -1,6 +1,6 @@
 # ✨ Scrollagotchi ✨
 
-<img width="2048" height="2048" alt="Scrollagotchi_Logo" src="https://github.com/user-attachments/assets/0c621f7f-f73e-4eea-8a8a-6530df2b6ce2" />
+<img width="1028" height="1028" alt="Scrollagotchi_Logo" src="https://github.com/user-attachments/assets/0c621f7f-f73e-4eea-8a8a-6530df2b6ce2" />
 
 
 > *A delightfully adorable digital companion that judges your Instagram habits—with style*
