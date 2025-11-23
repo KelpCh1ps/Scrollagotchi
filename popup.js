@@ -72,15 +72,16 @@ document.addEventListener('DOMContentLoaded', function()
             displaySeconds -= elapsedSeconds;
         }
 
-        
-        dogSprite.classList.remove('neutral', 'sad');
+        let percentage = (displaySeconds / localState.thresholdSeconds) * 100;
 
-        if(localState.currentMood === Mood.NEUTRAL)
-        {
-            dogSprite.classList.add('neutral');
-        }
-        else if(localState.currentMood === Mood.SAD)
-        {
+        if (percentage > 100) percentage = 100;
+        if (percentage < 0) percentage = 0;
+
+        healthFill.style.width = percentage + '%';
+
+        dogSprite.classList.remove('neutral', 'sad');
+        
+        if (percentage <= 20) {
             dogSprite.classList.add('sad');
             localState.currentHealth -= 0.1;
              if (localState.currentHealth <= 0) 
