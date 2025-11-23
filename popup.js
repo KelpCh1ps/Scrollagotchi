@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //updates the health bar width by getting the percentage when dividing current mins by max mins
     function updateHealthBar(currentSeconds, threshold, mood) {
-        let percentage = (currentSeconds/ threshold, mood) * 100;
+        let percentage = (currentSeconds/ threshold) * 100;
 
         //Clamp values
         if (percentage > 100) percentage = 100;
@@ -35,18 +35,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     chrome.storage.local.get(['instagramSeconds', 'thresholdSeconds', 'currentMood'], (result) => {
-        const secs = result.instagramMinutes || 0;
+        const secs = result.instagramSeconds || 0;
         const thresh = result.thresholdSeconds || 60;
-        const mood = result.currentMood !== undefinded ? result.currentMood : Mood.HAPPY;
-        updateUI(secs, thresh, mood);
+        const mood = result.currentMood !== undefined ? result.currentMood : Mood.HAPPY;
+        updateHealthBar(secs, thresh, mood);
     });
 
     chrome.storage.onChanged.addListener((changes, namespace) => {
         chrome.storage.local.get (['instagramSeconds', 'thresholdSeconds', 'currentMood'], (result) => {
-            const secs = result.instagramMinutes || 0;
+            const secs = result.instagramSeconds || 0;
             const thresh = result.thresholdSeconds || 60;
             const mood = result.currentMood !== undefinded ? result.currentMood : Mood.HAPPY;
-            updateUI(secs, thresh, mood);
+            updateHealthBar(secs, thresh, mood);
         });
     });
 });
