@@ -121,6 +121,7 @@ chrome.tabs.onActivated.addListener(() =>
                  console.log("Seconds until mood drop: " + secToMin);
                 chrome.alarms.create('moodDropTimer', { periodInMinutes: secToMin }); // 60 seconds
             });
+            startMoodDropTimers();
             chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
         }
     });
@@ -191,6 +192,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
                 console.log("Seconds until mood drop: " + secToMin);
                 chrome.alarms.create('moodDropTimer', { periodInMinutes: secToMin }); // 60 seconds
             });
+            startMoodDropTimers();
             chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
         }
     });
