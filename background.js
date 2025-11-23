@@ -10,8 +10,8 @@ chrome.runtime.onInstalled.addListener(() =>
     chrome.storage.local.set({
         tamagachiName: 'DOG',
         instagramSeconds: 0, // In seconds
-        thresholdSeconds: 60, // In seconds
-        secondsUntilMoodDrop: 60, // In seconds
+        thresholdSeconds: 10, // In seconds
+        secondsUntilMoodDrop: 30, // In seconds
         lastInstagramCheck: Date.now(),
         currentMood: Mood.HAPPY,
         currentHealth: 100,
@@ -66,8 +66,12 @@ chrome.tabs.onActivated.addListener(() =>
         if (tab.url.includes('instagram.com')) 
         {
             chrome.alarms.clear('resetInstagramTimer');
-            chrome.storage.local.get({isOnInstagram : false}, (data) => 
+            chrome.storage.local.get({isOnInstagram : false, isDead : false}, (data) => 
             {       
+                if(data.isDead === true)
+                {
+                    return;
+                }
                 if(data.isOnInstagram === false)
                 {
                     chrome.storage.local.set({  lastInstagramCheck: Date.now() });
@@ -78,8 +82,12 @@ chrome.tabs.onActivated.addListener(() =>
         }
         else
         {
-            chrome.storage.local.get({thresholdSeconds : 60, lastInstagramCheck: Date.now(), instagramSeconds : 0, isOnInstagram : false, currentMood : Mood.NEUTRAL}, (data) => 
+            chrome.storage.local.get({thresholdSeconds : 60, lastInstagramCheck: Date.now(), instagramSeconds : 0, isOnInstagram : false, currentMood : Mood.NEUTRAL, isDead : false}, (data) => 
             {
+                if(data.isDead === true)
+                {
+                    return;
+                }
                 const curTime = Date.now();
                 let igs = ((curTime - data.lastInstagramCheck) / 1000) + data.instagramSeconds;
                 if(data.isOnInstagram === true)
@@ -102,7 +110,16 @@ chrome.tabs.onActivated.addListener(() =>
                  
             });
             // Stop instagram timer and start mood drop timer
-            chrome.alarms.create('moodDropTimer', { periodInMinutes: 1 }); // 60 seconds
+            const secToMin = null;
+            chrome.storage.local.get({secondsUntilMoodDrop : 30, isDead : false}, (data) =>
+            {
+                if(data.isDead === true)
+                {
+                    return;
+                }
+                secToMin = data.secondsUntilMoodDrop / 60;
+            });
+            chrome.alarms.create('moodDropTimer', { periodInMinutes: secToMin }); // 60 seconds
             chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
         }
     });
@@ -119,8 +136,12 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
         if (tab.url.includes('instagram.com')) 
         {
             chrome.alarms.clear('resetInstagramTimer');
-            chrome.storage.local.get({isOnInstagram : false}, (data) => 
+            chrome.storage.local.get({isOnInstagram : false, isDead : false}, (data) => 
             {       
+                if(data.isDead === true)
+                {
+                    return;
+                }
                 if(data.isOnInstagram === false)
                 {
                     chrome.storage.local.set({  lastInstagramCheck: Date.now() });
@@ -131,8 +152,12 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
         }
         else
         {
-            chrome.storage.local.get({thresholdSeconds : 60, lastInstagramCheck: Date.now(), instagramSeconds : 0, isOnInstagram : false, currentMood : Mood.NEUTRAL}, (data) => 
+            chrome.storage.local.get({thresholdSeconds : 60, lastInstagramCheck: Date.now(), instagramSeconds : 0, isOnInstagram : false, currentMood : Mood.NEUTRAL, isDead : false}, (data) => 
             {
+                if(data.isDead === true)
+                {
+                    return;
+                }
                 const curTime = Date.now();
                 let igs = ((curTime - data.lastInstagramCheck) / 1000) + data.instagramSeconds;
                 if(data.isOnInstagram === true)
@@ -165,8 +190,12 @@ chrome.alarms.onAlarm.addListener((alarm) =>
 {
     if (alarm.name === 'moodDropTimer')
     {
-        chrome.storage.local.get(['currentMood'], (data) => 
+        chrome.storage.local.get({currentMood : Mood.NEUTRAL, isDead : false}, (data) => 
         {
+            if(data.isDead === true)
+            {
+                return;
+            }
              let currentMood = data.currentMood;
             if (currentMood < Mood.SAD)
             {
