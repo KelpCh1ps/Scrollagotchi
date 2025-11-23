@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         healthFill.style.width = percentage + '%';
 
-        dogSprite.classList.remove('neutral', 'sad');
+        dogSprite.classList.remove('neutral', 'sad', 'dead');
         
         if (percentage <= 20) {
             dogSprite.classList.add('sad');
