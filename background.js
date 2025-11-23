@@ -110,14 +110,15 @@ chrome.tabs.onActivated.addListener(() =>
                  
             });
             // Stop instagram timer and start mood drop timer
-            const secToMin = null;
+            
             chrome.storage.local.get({secondsUntilMoodDrop : 30, isDead : false}, (data) =>
             {
                 if(data.isDead === true)
                 {
                     return;
                 }
-                secToMin = data.secondsUntilMoodDrop / 60;
+                let secToMin = data.secondsUntilMoodDrop / 60;
+                 console.log("Seconds until mood drop: " + secToMin);
                 chrome.alarms.create('moodDropTimer', { periodInMinutes: secToMin }); // 60 seconds
             });
             chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
@@ -180,7 +181,16 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
                  
             });
             // Stop instagram timer and start mood drop timer
-            chrome.alarms.create('moodDropTimer', { periodInMinutes: 1 }); // 60 seconds
+             chrome.storage.local.get({secondsUntilMoodDrop : 30, isDead : false}, (data) =>
+            {
+                if(data.isDead === true)
+                {
+                    return;
+                }
+                let secToMin = data.secondsUntilMoodDrop / 60;
+                console.log("Seconds until mood drop: " + secToMin);
+                chrome.alarms.create('moodDropTimer', { periodInMinutes: secToMin }); // 60 seconds
+            });
             chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
         }
     });
