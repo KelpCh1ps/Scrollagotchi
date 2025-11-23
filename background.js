@@ -118,8 +118,8 @@ chrome.tabs.onActivated.addListener(() =>
                     return;
                 }
                 secToMin = data.secondsUntilMoodDrop / 60;
+                chrome.alarms.create('moodDropTimer', { periodInMinutes: secToMin }); // 60 seconds
             });
-            chrome.alarms.create('moodDropTimer', { periodInMinutes: secToMin }); // 60 seconds
             chrome.alarms.create('resetInstagramTimer', { delayInMinutes: 0.5 }); // 30 seconds
         }
     });
