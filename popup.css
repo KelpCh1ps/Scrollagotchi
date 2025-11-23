@@ -1,26 +1,39 @@
-HTML, body {
-    width: 250px; /* sets popup window to specific width and height */
-    height: 300px;
+/* 1. FORCE WINDOW SIZE */
+html {
+    width: 260px;
+    height: 400px;
+}
+
+body {
+    width: 260px;
+    height: 400px;
+    min-width: 260px;
+    min-height: 400px;
+    
+    margin: 0;
+    padding: 0;
     background-color: #222;
     color: white;
     font-family: 'Courier New', Courier, monospace;
-    margin: 0;
+    
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start; /* Aligns to top */
     align-items: center;
+    
     overflow: hidden;
 }
-  
+
 .container {
     width: 100%;
-    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
+    padding-top: 20px;
 }
   
-  /* Health Bar */
+/* --- RETRO HEALTH BAR --- */
 .health-label {
     font-size: 12px;
     font-weight: bold;
@@ -30,14 +43,11 @@ HTML, body {
     letter-spacing: 1px;
 }
 
-  /* Health-Bar-Container */
 .health-bar-container {
     width: 220px;
     height: 25px;
-
     border: 3px solid #3b4268;
     background-color: #c0c0c0;
-
     position: relative;
     box-shadow: 2px 2px 0px #000;
 }
@@ -49,83 +59,63 @@ HTML, body {
     left: 0;
     width: 100%;
     height: 100%;
-
-    background: repeating-linear-gradient(90deg, transparent 0px, transparent 9px, #3b4268 10px);
-
     background-image:
         repeating-linear-gradient(90deg, transparent 0px, transparent 9px, #3b4268 10px),
         repeating-linear-gradient(0deg, transparent 0px, transparent 4px, rgba(59, 66, 104, 0.2) 5px);
-
-        z-index: 2;
-        pointer-events: none;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .health-bar-fill {
-    width: 0%; /* JS will change this */
+    width: 0%;
     height: 100%;
-    
-    /* 3. The Gradient Color (Red -> Yellow -> Green) */
     background: linear-gradient(to right, 
-        #ff3333 0%,    /* Red start */
-        #ffeb3b 50%,   /* Yellow middle */
-        #4CAF50 100%   /* Green end */
+        #ff3333 0%,    
+        #ffeb3b 50%,   
+        #4CAF50 100%   
     );
-    
-    transition: width 0.5s ease-in-out;
+    transition: width 0.2s linear;
 }
 
-
+/* --- DOG SPRITE --- */
 .dog-sprite {
-    /* WINDOW SIZE */
-    width: 256px; 
-    height: 256px; 
-  
+    width: 512px; 
+    height: 512px; 
+    
+    /* FIX: Updated to .png */
     background-image: url('Assets/Scrollagotchi_Sprites.png'); 
     background-repeat: no-repeat;
-    
-    /* ANIMATION SPEED */
-    /* steps(4) means "snap 4 times" */
-    animation: walk-animation 0.8s steps(4) infinite; 
-    
+    animation: walk-animation 0.7s steps(6) infinite; 
     image-rendering: pixelated;
     
-    transform: scale(0.7);
-
-    background-position: center;
-  }
-  
-  /* Neutral State (20% - 50% Health */
+    /* FIX: Zoom shrinks the layout space properly */
+    zoom: 0.5; 
+    
+    background-position: center; 
+    margin-top: 10px;
+}
 
 .dog-sprite.neutral {
-    background-image: url('Assets/Scrollagotchi_Neutral.png');
-
-    animation: none;
-
+    background-image: url('Assets/dog_neutral.png');
+    animation: none; 
     background-size: contain;
     background-position: center bottom;
 }
 
 .dog-sprite.sad {
-    background-image: url('Assets/Scrollagotchi_Sad.png');
-
-    animation: none;
-
+    background-image: url('Assets/dog_sad.png');
+    animation: none; 
     background-size: contain;
     background-position: center bottom;
 }
-
-  /* ANIMATION LOGIC */
-  @keyframes walk-animation {
-    from { 
-      background-position: 0px; 
-    }
-    to { 
-      background-position: -1024px; 
-    }
-  }
   
-  .controls p {
+@keyframes walk-animation {
+    from { background-position: 0px; }
+    to { background-position: -1024px; }
+}
+  
+.controls p {
     font-size: 10px;
     color: #888;
     margin-top: 5px;
-  }
+}
