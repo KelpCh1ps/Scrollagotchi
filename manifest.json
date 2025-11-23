@@ -1,7 +1,7 @@
 {
   "name": "Scrollagotchi",
   "description": "Tamagotchi for your scrolling habits",
-  "permissions": ["storage", "tabs", "scripting", "alarms","idle"],
+  "permissions": ["storage", "tabs", "scripting", "alarms","idle","runtime"],
   "host_permissions": ["https://*.instagram.com/*"],
   "background": {
       "service_worker": "background.js"
